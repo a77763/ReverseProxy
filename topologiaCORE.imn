@@ -1,0 +1,201 @@
+node n1 {
+    type router
+    model host
+    network-config {
+	hostname ReverseProxy
+	!
+	interface eth0
+	 ip address 10.0.0.10/24
+	 ipv6 address 2001:0::10/64
+	!
+    }
+    canvas c1
+    iconcoords {626.0 164.0}
+    labelcoords {625.0 143.0}
+    interface-peer {eth0 n4}
+}
+
+node n2 {
+    type router
+    model host
+    network-config {
+	hostname Agent1
+	!
+	interface eth0
+	 ip address 10.0.0.11/24
+	 ipv6 address 2001:0::11/64
+	!
+    }
+    canvas c1
+    iconcoords {722.0 261.0}
+    labelcoords {722.0 293.0}
+    interface-peer {eth0 n4}
+}
+
+node n3 {
+    type router
+    model router
+    network-config {
+	hostname router
+	!
+	interface eth0
+	 ip address 10.0.0.1/24
+	 ipv6 address 2001:0::1/64
+	!
+    }
+    canvas c1
+    iconcoords {259.0 193.0}
+    labelcoords {256.0 225.0}
+    interface-peer {eth0 n4}
+}
+
+node n4 {
+    type lanswitch
+    network-config {
+	hostname switch
+	!
+    }
+    canvas c1
+    iconcoords {476.0 261.0}
+    labelcoords {476.0 285.0}
+    interface-peer {e0 n1}
+    interface-peer {e1 n2}
+    interface-peer {e2 n3}
+    interface-peer {e3 n5}
+    interface-peer {e4 n6}
+    interface-peer {e5 n7}
+}
+
+node n5 {
+    type router
+    model host
+    network-config {
+	hostname Agent2
+	!
+	interface eth0
+	 ip address 10.0.0.12/24
+	 ipv6 address 2001:0::12/64
+	!
+    }
+    canvas c1
+    iconcoords {718.0 355.0}
+    labelcoords {718.0 387.0}
+    interface-peer {eth0 n4}
+}
+
+node n6 {
+    type router
+    model PC
+    network-config {
+	hostname Client1
+	!
+	interface eth0
+	 ip address 10.0.0.20/24
+	 ipv6 address 2001:0::20/64
+	!
+    }
+    canvas c1
+    iconcoords {373.0 543.0}
+    labelcoords {373.0 575.0}
+    interface-peer {eth0 n4}
+}
+
+node n7 {
+    type router
+    model PC
+    network-config {
+	hostname Client2
+	!
+	interface eth0
+	 ip address 10.0.0.21/24
+	 ipv6 address 2001:0::21/64
+	!
+    }
+    canvas c1
+    iconcoords {576.0 529.0}
+    labelcoords {576.0 561.0}
+    interface-peer {eth0 n4}
+}
+
+link l1 {
+    nodes {n1 n4}
+    bandwidth 0
+}
+
+link l2 {
+    nodes {n2 n4}
+    bandwidth 0
+}
+
+link l3 {
+    nodes {n4 n3}
+    bandwidth 0
+}
+
+link l4 {
+    nodes {n4 n5}
+    bandwidth 0
+}
+
+link l5 {
+    nodes {n6 n4}
+    bandwidth 0
+}
+
+link l6 {
+    nodes {n7 n4}
+    bandwidth 0
+}
+
+annotation a1 {
+    iconcoords {215.0 81.0 762.0 405.0}
+    type rectangle
+    label {Main Server}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize {14}
+    color #C0C0FF
+    width 0
+    border black
+    rad 20
+    effects {bold underline}
+    canvas c1
+}
+
+annotation a2 {
+    iconcoords {298 437 655 620}
+    type rectangle
+    label {Clients}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize {14}
+    color #dbc06c
+    width 0
+    border black
+    rad 20
+    effects {bold underline}
+    canvas c1
+}
+
+canvas c1 {
+    name {Canvas1}
+    wallpaper-style {upperleft}
+    wallpaper {}
+}
+
+option global {
+    interface_names no
+    ip_addresses yes
+    ipv6_addresses yes
+    node_labels yes
+    link_labels yes
+    show_api no
+    background_images no
+    annotations yes
+    grid no
+    traffic_start 0
+}
+
+option session {
+}
+
